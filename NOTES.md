@@ -8,8 +8,7 @@
  - Constraints
    - Primary Key
      - conf_id
-   - Unique Key
-     - conf_id
+   - Unique Keys
      - name
 
 ##user_type##
@@ -73,7 +72,7 @@
      - user_id, character_id
    - Foreign Keys
      - user.user_id
-     - character_type.character_type_id
+     - character.character_id
 
 ##attribute##
  - Columns
@@ -261,18 +260,18 @@
      - name
 
 ##character_class##
-  - Columns
-    - character_class_id
-    - character_id
-    - class_id
-  - Constraints
-    - Primary Key
-      - character_class_id
-    - Unique Keys
-      - character_id
-    - Foreign Keys
-      - character.character_id
-      - class.class_id
+ - Columns
+   - character_class_id
+   - character_id
+   - class_id
+ - Constraints
+   - Primary Key
+     - character_class_id
+   - Unique Keys
+     - character_id
+   - Foreign Keys
+     - character.character_id
+     - class.class_id
 
 ##ability_type##
  - Columns
@@ -292,7 +291,7 @@
    - Primary Key
      - ability_id
    - Foreign Keys
-     - ability_type_id
+     - ability.ability_type_id
 
 ##class_ability##
  - Columns
