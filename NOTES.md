@@ -93,19 +93,22 @@
    - name:'willpower', desc:'A measure of the character''s mental resistance.',
    - name:'perception', desc:'A measure of a character''s openness to their surroundings.',
    - name:'luck', desc:'A measure of a character having chance to favor him or her.',
+   - name: 'damage', desc: 'A measure to inflict damage',
 
 ##character_attribute##
  - Columns
    - character_attribute_id
+   - character_id
    - attribute_id
    - value
  - Constraints
    - Primary Key
      - character_attribute_id
    - Unique Keys
-     - character_attribute_id, attribute_id
+     - character_id, attribute_id
    - Foreign Keys
-     - character_attribute.character_attribute_id
+     - character.character_id
+     - attribute.attribute_id
 
 ##place##
  - Columns
@@ -162,6 +165,21 @@
      - item_id
    - Foreign Keys
      - item_type.item_type_id
+
+##item_attribute##
+ - Columns
+   - item_attribute_id
+   - item_id
+   - attribute_id
+   - value
+ - Constraints
+   - Primary Key
+     - item_attribute_id
+   - Unique Keys
+     - item_id, attribute_id
+   - Foreign Keys
+     - item.item_id
+     - attribute.attribute_id
 
 ##item_location##
  - Columns
@@ -256,10 +274,25 @@
       - character.character_id
       - class.class_id
 
+##ability_type##
+ - Columns
+   - ability_type_id
+   - name
+   - desc
+ - Constraints
+   - Primary Key
+     - ability_type_id
+
 ##ability##
  - Columns
    - ability_id
    - name
+   - ability_type_id
+ - Constraints
+   - Primary Key
+     - ability_id
+   - Foreign Keys
+     - ability_type_id
 
 ##class_ability##
  - Columns
@@ -274,5 +307,4 @@
    - Foreign Keys
      - class.class_id
      - ability.ability_id
-
 
