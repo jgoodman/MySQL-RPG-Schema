@@ -54,6 +54,10 @@
    - character_id
    - character_type_id
    - name
+   - alive
+   - level
+   - xp
+   - money
  - Constraints
    - Primary Key
      - character_id
@@ -92,7 +96,7 @@
    - name:'willpower', desc:'A measure of the character''s mental resistance.',
    - name:'perception', desc:'A measure of a character''s openness to their surroundings.',
    - name:'luck', desc:'A measure of a character having chance to favor him or her.',
-   - name: 'damage', desc: 'A measure to inflict damage',
+   - name:'damage', desc: 'A measure to inflict damage',
 
 ##character_attribute##
  - Columns
@@ -159,6 +163,7 @@
    - item_id
    - item_type_id
    - name
+   - durability
  - Constraints
    - Primary Key
      - item_id
@@ -306,4 +311,69 @@
    - Foreign Keys
      - class.class_id
      - ability.ability_id
+
+##buff_type##
+ - Columns
+   - buff_type_id
+   - name
+   - desc
+ - Constraints
+   - Primary Key
+     - buff_type_id
+
+##buff##
+ - Columns
+   - buff_id
+   - name
+   - buff_type_id
+ - Constraints
+   - Primary Key
+     - buff_id
+   - Foreign Keys
+     - buff_type.buff_type_id
+
+##character_buff##
+ - Columns
+   - character_buff_id
+   - character_id
+   - buff_id
+ - Constraints
+   - Primary Key
+     - character_buff_id
+   - Foreign Keys
+     - buff.buff_id
+     - character.character_id
+
+##debuff_type##
+ - Columns
+   - debuff_type_id
+   - name
+   - desc
+ - Constraints
+   - Primary Key
+     - debuff_type_id
+
+##debuff##
+ - Columns
+   - debuff_id
+   - name
+   - debuff_type_id
+ - Constraints
+   - Primary Key
+     - debuff_id
+   - Foreign Keys
+     - debuff_type.debuff_type_id
+
+##character_debuff##
+ - Columns
+   - character_debuff_id
+   - character_id
+   - debuff_id
+ - Constraints
+   - Primary Key
+     - character_debuff_id
+   - Foreign Keys
+     - debuff.debuff_id
+     - character.character_id
+
 
