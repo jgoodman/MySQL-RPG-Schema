@@ -1,4 +1,366 @@
-MySQL-RPG-Schema
-================
+#MySQL-RPG-Schema#
 
 A database schema for role-playing games
+
+#Description#
+
+This repo contains a database template that could be used when designing an RPG.
+
+There is a possibility that this schema may not fit your exact needs, but it could be used as a jump off point to get you going. Hopefully, there is enough here where you can use most of it and modify the bits and peices you need.
+
+The schema here is intended for a MySQL database.
+
+You may want to take into consideration using either MyISAM or Innodb. Each have their advantages and disadvantages. I've considered making these Innodb, but decided to leave that out. If you have a preference on using a particular database engine, then you may need to modify the schema.
+
+
+#Synopsis#
+
+The "create-tables.sql" file will have the database schema to the create tables.
+
+
+#Database Tables#
+
+Below is an overview on individual database tables.
+
+
+##conf##
+
+Various configuration settings for your game *could* be held here.
+
+Columns:
+- conf_id
+- name
+- value
+
+
+##user_type##
+
+Different user types that would be associated with a "user" (not to be confused with "characters").
+
+Columns:
+- user_type_id
+- name
+
+Rows:
+- name:'admin',
+- name:'moderator',
+- name:'player',
+- name:'spectator',
+
+
+##user##
+
+This table holds the real world player information. Entries inside here are known as "users", which differ from "characters"
+
+Columns:
+- user_id
+- user_type_id
+- first_name
+- last_name
+- email
+- password
+
+
+##character_type##
+
+Different character types that are associated with a "character".
+
+Columns:
+- character_type_id
+- name
+
+Rows:
+- name:'player',
+- name:'non-playable',
+
+
+##character##
+
+Records inside here would be characters in your game. This table includes playable and non-playable characters.
+
+Columns:
+- character_id
+- character_type_id
+- name
+- alive
+- level
+- xp
+- money
+
+
+##user_character##
+
+This table links "users" to "characters". It is recomended that the character a user will associate with should have a character_type (SEE character_type) classifing the character as "player".
+
+Columns:
+- user_character_id
+- user_id
+- character_id
+
+
+##attribute##
+
+A basic list of attributes.
+
+See this [wiki article](http://en.wikipedia.org/wiki/Attribute_(role-playing_games)) in regards to rpg attributes.
+
+Columns:
+- attribute_id
+- name
+- desc
+
+Initial rows inserted:
+- name:'strength', desc:'A measure of how physically strong a character is.',
+- name:'constitution', desc:'A measure of how resilient a character is.',
+- name:'dexterity', desc:'A measure of how agile a character is.',
+- name:'intelligence', desc:'A measure of a character''s problem-solving ability.',
+- name:'charisma', desc:'A measure of a character''s social skills, and sometimes their physical appearance.',
+- name:'wisdom', desc:'A measure of a character''s common sense and/or spirituality.',
+- name:'willpower', desc:'A measure of the character''s mental resistance.',
+- name:'perception', desc:'A measure of a character''s openness to their surroundings.',
+- name:'luck', desc:'A measure of a character having chance to favor him or her.',
+- name: 'damage', desc: 'A measure to inflict damage',
+
+
+##character_attribute##
+
+This table associates attributes to characters.
+
+Columns:
+- character_attribute_id
+- character_id
+- attribute_id
+- value
+
+
+##place##
+
+Used by "location", This table holds a list of place names.
+
+Columns:
+- place_id
+- name
+
+
+##location##
+
+A list of x and y coordinates. Each record will be associated with a "place" (SEE "place" TABLE). You can have multiple location records that are of the same place.
+
+Columns:
+- location_id
+- x
+- y
+- place_id
+
+
+##character_location##
+
+A list reporting where characters are at.
+
+Columns:
+- character_location_id
+- character_id
+- location_id
+
+
+##item_type##
+
+Different item types held here.
+
+Columns:
+- item_type_id
+- name
+- desc
+
+
+##item##
+
+An object that characters can use in some way.
+
+Columns:
+- item_id
+- item_type_id
+- name
+
+
+##item_attribute##
+
+This table associates items with attributes. These attributes are intended to be added to character attributes. If an item 
+
+Columns:
+- item_attribute_id
+- item_id
+- attribute_id
+- value
+
+
+##item_location##
+
+A list of item locations. It is intended that if a character has an item on them, then the item will not be in this table.
+
+Columns:
+- item_location_id
+- item_id
+- location_id
+
+
+##character_item##
+
+The "character inventory", what the character has on them or perhaps in a backpack of sorts. If an item is equiped, then it is not intended to be in here. However, it is possible to have equipped items in here also.
+
+Columns:
+- character_item_id
+- character_id
+- item_id
+
+
+##equipment_slot##
+
+A list of possible slots where items can be equiped to.
+
+Columns:
+- equipment_slot_id
+- name
+
+Initial rows inserted:
+- name:'head',
+- name:'shoulder',
+- name:'chest',
+- name:'back',
+- name:'wrist',
+- name:'hands',
+- name:'waist',
+- name:'leg',
+- name:'feet',
+- name:'neck',
+- name:'ears',
+- name:'ring',
+- name:'main_hand',
+- name:'off_hand',
+
+
+##character_equipment##
+
+A list of items that are equiped to characters.
+
+Columns:
+- character_equipment_id
+- equipment_slot_id
+- character_id
+- item_id
+
+
+##class##
+
+A list of classes that characters can be. 
+
+See this [wiki article](http://en.wikipedia.org/wiki/Character_class) in regards to what rpg classes are and the different types.
+
+Columns:
+- class_id
+- name
+
+
+##character_class##
+
+This table associates characters to a class (SEE "class" TABLE)
+
+Columns:
+- character_class_id
+- character_id
+- class_id
+
+
+##ability_type##
+
+Different ability types held here (SEE "ability" TABLE).
+
+Columns:
+- ability_type_id
+- name
+- desc
+
+
+##ability##
+
+An ability is like a special action, spell, or possible talent that characters can perform in combat.
+
+Columns:
+- ability_id
+- name
+- ability_type_id
+
+
+##class_ability##
+
+This table associates what class can do an ability.
+
+Columns:
+- class_ability_id
+- class_id
+- ability_id
+
+
+##buff_type##
+
+Different buff types held here (SEE "buff" TABLE).
+
+Columns:
+- buff_type_id
+- name
+- desc
+
+
+##buff##
+
+A "buff" is usually some temporary boost given to a character by some mean, perhaps from an ability, an item, or being at some place.
+
+See this [wiki article](http://en.wikipedia.org/wiki/Status_effect#Buffs) in regards to what rpg buffs are and examples.
+
+Columns:
+- buff_id
+- name
+- buff_type_id
+
+
+##character_buff##
+
+This table associates buffs to what characters currently have on them.
+
+Columns:
+- character_buff_id
+- character_id
+- buff_id
+
+
+##debuff_type##
+
+Different debuff types held here (SEE "debuff" TABLE).
+
+Columns:
+- debuff_type_id
+- name
+- desc
+
+
+##debuff##
+
+A "buff" is usually some temporary disadvantage given to a character, perhaps from an ability, an item, or being at some place.
+
+See this [wiki article](http://en.wikipedia.org/wiki/Status_effect#Debuffs) in regards to what rpg debuffs are and examples.
+
+Columns:
+- debuff_id
+- name
+- debuff_type_id
+
+
+##character_debuff##
+
+This table associates debuffs to what characters currently have on them.
+
+Columns:
+- character_debuff_id
+- character_id
+- debuff_id
+
