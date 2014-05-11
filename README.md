@@ -15,7 +15,9 @@ You may want to take into consideration using either MyISAM or Innodb. Each have
 
 ###Synopsis###
 
-The "create-tables.sql" file will have the database schema to the create tables.
+The "create_tables.sql" file will have the database schema to the create tables.
+
+The "create_history_tables.sql" file creates a history table for each table. Having history tables is intended to be optional hence being in a seperate file.
 
 
 ###Database Tables###
