@@ -236,3 +236,51 @@ CREATE TABLE `class_ability` (
     CONSTRAINT `fk_class_ability_class_id` FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk_class_ability_ability_id` FOREIGN KEY (`ability_id`) REFERENCES `ability`(`ability_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE `buff_type` (
+    `buff_type_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `desc` varchar(255),
+    PRIMARY KEY (`buff_type_id`)
+);
+
+CREATE TABLE `buff` (
+    `buff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `buff_type_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`buff_id`),
+    CONSTRAINT `fk_buff_buff_type_id` FOREIGN KEY (`buff_type_id`) REFERENCES `buff_type`(`buff_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `character_buff` (
+    `character_buff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    `buff_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`character_buff_id`),
+    CONSTRAINT `fk_character_buff_buff_id` FOREIGN KEY (`buff_id`) REFERENCES `buff`(`buff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_buff_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `debuff_type` (
+    `debuff_type_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `desc` varchar(255),
+    PRIMARY KEY (`debuff_type_id`)
+);
+
+CREATE TABLE `debuff` (
+    `debuff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `debuff_type_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`debuff_id`),
+    CONSTRAINT `fk_debuff_debuff_type_id` FOREIGN KEY (`debuff_type_id`) REFERENCES `debuff_type`(`debuff_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `character_debuff` (
+    `character_debuff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    `debuff_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`character_debuff_id`),
+    CONSTRAINT `fk_character_debuff_debuff_id` FOREIGN KEY (`debuff_id`) REFERENCES `debuff`(`debuff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_debuff_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
