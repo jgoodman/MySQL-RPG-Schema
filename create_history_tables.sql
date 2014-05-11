@@ -324,6 +324,7 @@ CREATE TABLE `h_item_loot` (
     `item_loot_id` int(11) UNSIGNED NOT NULL,
     `loot_id` int(11) UNSIGNED NOT NULL,
     `item_id` int(11) UNSIGNED NOT NULL,
+    `drop_chance` FLOAT(4,4),
     PRIMARY KEY (`h_item_loot_id`)
 );
 
