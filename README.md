@@ -364,3 +364,230 @@ Columns:
 - character_id
 - debuff_id
 
+
+##loot##
+
+This table lists the possible loot that can be gained.
+
+Columns:
+- loot_id
+- xp
+- money
+
+
+##character_loot##
+
+This table associates loot awarded when defeating a specific character.
+
+Columns:
+- character_loot_id
+- loot_id
+- character_id
+
+
+##item_loot##
+
+This table associates items awarded when receiving a particular loot.
+
+Columns:
+- item_loot_id
+- loot_id
+- item_id
+
+
+##entity_type##
+
+A list of basic types associated with entities.
+
+Columns:
+- entity_type_id
+- name
+
+
+##entity##
+
+An "entity" is an alternative to the "non-playable" character type. This table is intended to have various non playable characters in your game. These could be friendly or hostile to players. They can be ugly monsters or beautiful human. It is really up to you if you want to use this table or how you want to use it.
+
+Columns:
+- entity_id
+- entity_type_id
+- name
+- level
+
+
+##entity_attribute##
+
+Associates an attribute to an entity.
+
+Columns:
+- entity_attribute_id
+- entity_id
+- attribute_id
+- value
+
+
+##entity_location##
+
+Gives an entity a location.
+
+Columns:
+- entity_location_id
+- entity_id
+- location_id
+
+
+##entity_class##
+
+Assign an entity to a class.
+
+Columns:
+- entity_class_id
+- entity_id
+- class_id
+
+
+##entity_buff##
+
+Associates current buffs with an entity (SEE "buff" TABLE)
+
+Columns:
+- entity_buff_id
+- entity_id
+- buff_id
+
+
+##entity_debuff##
+
+Associates current debuffs with an entity (SEE "debuff" TABLE)
+
+Columns:
+- entity_debuff_id
+- entity_id
+- debuff_id
+
+
+##entity_loot##
+
+Associates loot awarded when defeating a specific entity.
+
+Columns:
+- entity_loot_id
+- loot_id
+- entity_id
+
+
+##faction##
+
+A global and permenant group of characters ("playable" or "non-playable") and entities that share some idea. That idea could be political, religious, cultural, spiritual, or something different entirely.
+
+Columns:
+- faction_id
+- name
+
+
+##character_faction##
+
+Associates a character to a faction.
+
+Columns:
+- character_faction_id
+- character_id
+- faction_id
+
+
+##entity_faction##
+
+Associates an entity to a faction.
+
+Columns:
+- entity_faction_id
+- entity_id
+- faction_id
+
+
+##rank##
+
+A list of generic rank names.
+
+Columns:
+- guild_id
+- name
+
+
+##guild##
+
+A global and permenant group of playable characters working together.
+
+Columns:
+- guild_id
+- name
+
+
+##guild_rank##
+
+A list of ranks associated to a particular guild.
+
+Columns:
+- guild_rank_id
+- guild_id
+- rank_id
+
+
+##character_guild##
+
+Associates a character to a guild.
+
+Columns:
+- character_guild_id
+- character_id
+- guild_id
+- guild_leader
+
+
+##character_guild_rank##
+
+Associates a character to a guild_rank.
+
+Columns:
+- character_guild_rank_id
+- character_id
+- guild_rank_id
+
+
+##party##
+
+A small and likely temporary group of players trying to accomplish an objective.
+
+Columns:
+- party_id
+
+
+##character_party##
+
+Associates a character to a party.
+
+Columns:
+- character_party_id
+- character_id
+- party_id
+- party_leader
+
+
+##title##
+
+A list of titles.
+
+Columns
+- title_id
+- name
+
+
+##character_title##
+
+Associates a character to a title.
+
+Columns
+- character_title_id
+- character_id
+- title_id
+
