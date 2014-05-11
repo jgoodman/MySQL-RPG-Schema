@@ -391,10 +391,13 @@ Columns:
 
 This table associates items awarded when receiving a particular loot.
 
+The "drop_chance" column sets the chance of receiving this item. This column is intended to be a decimal number between 0 to 1 as a way to represent a percentage.
+
 Columns:
 - item_loot_id
 - loot_id
 - item_id
+- drop_chance
 
 
 ####entity_type####
