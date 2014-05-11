@@ -1,8 +1,8 @@
-#MySQL-RPG-Schema#
+###MySQL-RPG-Schema###
 
 A database schema for role-playing games
 
-#Description#
+###Description###
 
 This repo contains a database template that could be used when designing an RPG.
 
@@ -13,17 +13,17 @@ The schema here is intended for a MySQL database.
 You may want to take into consideration using either MyISAM or Innodb. Each have their advantages and disadvantages. I've considered making these Innodb, but decided to leave that out. If you have a preference on using a particular database engine, then you may need to modify the schema.
 
 
-#Synopsis#
+###Synopsis###
 
 The "create-tables.sql" file will have the database schema to the create tables.
 
 
-#Database Tables#
+###Database Tables###
 
 Below is an overview on individual database tables.
 
 
-##conf##
+####conf####
 
 Various configuration settings for your game *could* be held here.
 
@@ -33,7 +33,7 @@ Columns:
 - value
 
 
-##user_type##
+####user_type####
 
 Different user types that would be associated with a "user" (not to be confused with "characters").
 
@@ -48,7 +48,7 @@ Rows:
 - name:'spectator',
 
 
-##user##
+####user####
 
 This table holds the real world player information. Entries inside here are known as "users", which differ from "characters"
 
@@ -61,7 +61,7 @@ Columns:
 - password
 
 
-##character_type##
+####character_type####
 
 Different character types that are associated with a "character".
 
@@ -74,7 +74,7 @@ Rows:
 - name:'non-playable',
 
 
-##character##
+####character####
 
 Records inside here would be characters in your game. This table includes playable and non-playable characters.
 
@@ -88,7 +88,7 @@ Columns:
 - money
 
 
-##user_character##
+####user_character####
 
 This table links "users" to "characters". It is recomended that the character a user will associate with should have a character_type (SEE character_type) classifing the character as "player".
 
@@ -98,7 +98,7 @@ Columns:
 - character_id
 
 
-##attribute##
+####attribute####
 
 A basic list of attributes.
 
@@ -122,7 +122,7 @@ Initial rows inserted:
 - name: 'damage', desc: 'A measure to inflict damage',
 
 
-##character_attribute##
+####character_attribute####
 
 This table associates attributes to characters.
 
@@ -133,7 +133,7 @@ Columns:
 - value
 
 
-##place##
+####place####
 
 Used by "location", This table holds a list of place names.
 
@@ -142,7 +142,7 @@ Columns:
 - name
 
 
-##location##
+####location####
 
 A list of x and y coordinates. Each record will be associated with a "place" (SEE "place" TABLE). You can have multiple location records that are of the same place.
 
@@ -153,7 +153,7 @@ Columns:
 - place_id
 
 
-##character_location##
+####character_location####
 
 A list reporting where characters are at.
 
@@ -163,7 +163,7 @@ Columns:
 - location_id
 
 
-##item_type##
+####item_type####
 
 Different item types held here.
 
@@ -173,7 +173,7 @@ Columns:
 - desc
 
 
-##item##
+####item####
 
 An object that characters can use in some way.
 
@@ -183,7 +183,7 @@ Columns:
 - name
 
 
-##item_attribute##
+####item_attribute####
 
 This table associates items with attributes. These attributes are intended to be added to character attributes. If an item 
 
@@ -194,7 +194,7 @@ Columns:
 - value
 
 
-##item_location##
+####item_location####
 
 A list of item locations. It is intended that if a character has an item on them, then the item will not be in this table.
 
@@ -204,7 +204,7 @@ Columns:
 - location_id
 
 
-##character_item##
+####character_item####
 
 The "character inventory", what the character has on them or perhaps in a backpack of sorts. If an item is equiped, then it is not intended to be in here. However, it is possible to have equipped items in here also.
 
@@ -214,7 +214,7 @@ Columns:
 - item_id
 
 
-##equipment_slot##
+####equipment_slot####
 
 A list of possible slots where items can be equiped to.
 
@@ -239,7 +239,7 @@ Initial rows inserted:
 - name:'off_hand',
 
 
-##character_equipment##
+####character_equipment####
 
 A list of items that are equiped to characters.
 
@@ -250,7 +250,7 @@ Columns:
 - item_id
 
 
-##class##
+####class####
 
 A list of classes that characters can be. 
 
@@ -261,7 +261,7 @@ Columns:
 - name
 
 
-##character_class##
+####character_class####
 
 This table associates characters to a class (SEE "class" TABLE)
 
@@ -271,7 +271,7 @@ Columns:
 - class_id
 
 
-##ability_type##
+####ability_type####
 
 Different ability types held here (SEE "ability" TABLE).
 
@@ -281,7 +281,7 @@ Columns:
 - desc
 
 
-##ability##
+####ability####
 
 An ability is like a special action, spell, or possible talent that characters can perform in combat.
 
@@ -291,7 +291,7 @@ Columns:
 - ability_type_id
 
 
-##class_ability##
+####class_ability####
 
 This table associates what class can do an ability.
 
@@ -301,7 +301,7 @@ Columns:
 - ability_id
 
 
-##buff_type##
+####buff_type####
 
 Different buff types held here (SEE "buff" TABLE).
 
@@ -311,7 +311,7 @@ Columns:
 - desc
 
 
-##buff##
+####buff####
 
 A "buff" is usually some temporary boost given to a character by some mean, perhaps from an ability, an item, or being at some place.
 
@@ -323,7 +323,7 @@ Columns:
 - buff_type_id
 
 
-##character_buff##
+####character_buff####
 
 This table associates buffs to what characters currently have on them.
 
@@ -333,7 +333,7 @@ Columns:
 - buff_id
 
 
-##debuff_type##
+####debuff_type####
 
 Different debuff types held here (SEE "debuff" TABLE).
 
@@ -343,7 +343,7 @@ Columns:
 - desc
 
 
-##debuff##
+####debuff####
 
 A "buff" is usually some temporary disadvantage given to a character, perhaps from an ability, an item, or being at some place.
 
@@ -355,7 +355,7 @@ Columns:
 - debuff_type_id
 
 
-##character_debuff##
+####character_debuff####
 
 This table associates debuffs to what characters currently have on them.
 
@@ -365,7 +365,7 @@ Columns:
 - debuff_id
 
 
-##loot##
+####loot####
 
 This table lists the possible loot that can be gained.
 
@@ -375,7 +375,7 @@ Columns:
 - money
 
 
-##character_loot##
+####character_loot####
 
 This table associates loot awarded when defeating a specific character.
 
@@ -385,7 +385,7 @@ Columns:
 - character_id
 
 
-##item_loot##
+####item_loot####
 
 This table associates items awarded when receiving a particular loot.
 
@@ -395,7 +395,7 @@ Columns:
 - item_id
 
 
-##entity_type##
+####entity_type####
 
 A list of basic types associated with entities.
 
@@ -404,7 +404,7 @@ Columns:
 - name
 
 
-##entity##
+####entity####
 
 An "entity" is an alternative to the "non-playable" character type. This table is intended to have various non playable characters in your game. These could be friendly or hostile to players. They can be ugly monsters or beautiful human. It is really up to you if you want to use this table or how you want to use it.
 
@@ -415,7 +415,7 @@ Columns:
 - level
 
 
-##entity_attribute##
+####entity_attribute####
 
 Associates an attribute to an entity.
 
@@ -426,7 +426,7 @@ Columns:
 - value
 
 
-##entity_location##
+####entity_location####
 
 Gives an entity a location.
 
@@ -436,7 +436,7 @@ Columns:
 - location_id
 
 
-##entity_class##
+####entity_class####
 
 Assign an entity to a class.
 
@@ -446,7 +446,7 @@ Columns:
 - class_id
 
 
-##entity_buff##
+####entity_buff####
 
 Associates current buffs with an entity (SEE "buff" TABLE)
 
@@ -456,7 +456,7 @@ Columns:
 - buff_id
 
 
-##entity_debuff##
+####entity_debuff####
 
 Associates current debuffs with an entity (SEE "debuff" TABLE)
 
@@ -466,7 +466,7 @@ Columns:
 - debuff_id
 
 
-##entity_loot##
+####entity_loot####
 
 Associates loot awarded when defeating a specific entity.
 
@@ -476,7 +476,7 @@ Columns:
 - entity_id
 
 
-##faction##
+####faction####
 
 A global and permenant group of characters ("playable" or "non-playable") and entities that share some idea. That idea could be political, religious, cultural, spiritual, or something different entirely.
 
@@ -485,7 +485,7 @@ Columns:
 - name
 
 
-##character_faction##
+####character_faction####
 
 Associates a character to a faction.
 
@@ -495,7 +495,7 @@ Columns:
 - faction_id
 
 
-##entity_faction##
+####entity_faction####
 
 Associates an entity to a faction.
 
@@ -505,7 +505,7 @@ Columns:
 - faction_id
 
 
-##rank##
+####rank####
 
 A list of generic rank names.
 
@@ -514,7 +514,7 @@ Columns:
 - name
 
 
-##guild##
+####guild####
 
 A global and permenant group of playable characters working together.
 
@@ -523,7 +523,7 @@ Columns:
 - name
 
 
-##guild_rank##
+####guild_rank####
 
 A list of ranks associated to a particular guild.
 
@@ -533,7 +533,7 @@ Columns:
 - rank_id
 
 
-##character_guild##
+####character_guild####
 
 Associates a character to a guild.
 
@@ -544,7 +544,7 @@ Columns:
 - guild_leader
 
 
-##character_guild_rank##
+####character_guild_rank####
 
 Associates a character to a guild_rank.
 
@@ -554,7 +554,7 @@ Columns:
 - guild_rank_id
 
 
-##party##
+####party####
 
 A small and likely temporary group of players trying to accomplish an objective.
 
@@ -562,7 +562,7 @@ Columns:
 - party_id
 
 
-##character_party##
+####character_party####
 
 Associates a character to a party.
 
@@ -573,7 +573,7 @@ Columns:
 - party_leader
 
 
-##title##
+####title####
 
 A list of titles.
 
@@ -582,7 +582,7 @@ Columns
 - name
 
 
-##character_title##
+####character_title####
 
 Associates a character to a title.
 
