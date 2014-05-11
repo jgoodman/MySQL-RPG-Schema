@@ -163,6 +163,7 @@
    - item_id
    - item_type_id
    - name
+   - required_level
    - durability
  - Constraints
    - Primary Key
@@ -292,6 +293,7 @@
    - ability_id
    - name
    - ability_type_id
+   - required_level
  - Constraints
    - Primary Key
      - ability_id
@@ -376,4 +378,269 @@
      - debuff.debuff_id
      - character.character_id
 
+##loot##
+ - Columns
+   - loot_id
+   - xp
+   - money
+ - Constraints
+   - Primary Key
+     - loot_id
+
+##character_loot##
+ - Columns
+   - character_loot_id
+   - loot_id
+   - character_id
+ - Constraints
+   - Primary Key
+     - character_loot_id
+   - Foreign Keys
+     - loot.loot_id
+     - character.character_id
+
+##item_loot##
+ - Columns
+   - item_loot_id
+   - loot_id
+   - item_id
+ - Constraints
+   - Primary Key
+     - item_loot_id
+   - Foreign Keys
+     - loot.loot_id
+     - item.item_id
+
+##entity_type##
+ - Columns
+   - entity_type_id
+   - name
+ - Constraints
+   - Primary Key
+     - entity_type_id
+
+##entity##
+ - Columns
+   - entity_id
+   - entity_type_id
+   - name
+   - level
+ - Constraints
+   - Primary Key
+     - entity_id
+   - Foreign Keys
+     - entity_type.entity_type_id
+
+##entity_attribute##
+ - Columns
+   - entity_attribute_id
+   - entity_id
+   - attribute_id
+   - value
+ - Constraints
+   - Primary Key
+     - entity_attribute_id
+   - Unique Keys
+     - entity_id, attribute_id
+   - Foreign Keys
+     - entity.entity_id
+     - attribute.attribute_id
+
+##entity_location##
+ - Columns
+   - entity_location_id
+   - entity_id
+   - location_id
+ - Constraints
+   - Primary Key
+     - entity_location_id
+   - Unique Keys
+     - entity_id
+   - Foreign Keys
+     - entity.entity_id
+     - location.location_id
+
+##entity_class##
+ - Columns
+   - entity_class_id
+   - entity_id
+   - class_id
+ - Constraints
+   - Primary Key
+     - entity_class_id
+   - Unique Keys
+     - entity_id
+   - Foreign Keys
+     - entity.entity_id
+     - class.class_id
+
+##entity_buff##
+ - Columns
+   - entity_buff_id
+   - entity_id
+   - buff_id
+ - Constraints
+   - Primary Key
+     - entity_buff_id
+   - Foreign Keys
+     - buff.buff_id
+     - entity.entity_id
+
+##entity_debuff##
+ - Columns
+   - entity_debuff_id
+   - entity_id
+   - debuff_id
+ - Constraints
+   - Primary Key
+     - entity_debuff_id
+   - Foreign Keys
+     - debuff.debuff_id
+     - entity.entity_id
+
+##entity_loot##
+ - Columns
+   - entity_loot_id
+   - loot_id
+   - entity_id
+ - Constraints
+   - Primary Key
+     - entity_loot_id
+   - Foreign Keys
+     - loot.loot_id
+     - entity.entity_id
+
+##faction##
+ - Columns
+   - faction_id
+   - name
+ - Constraints
+   - Primary Key
+     - faction_id
+
+##character_faction##
+ - Columns
+   - character_faction_id
+   - character_id
+   - faction_id
+ - Constraints
+   - Primary Key
+     - character_faction_id
+   - Foreign Keys
+     - character.character_id
+     - faction.faction_id
+
+##entity_faction##
+ - Columns
+   - entity_faction_id
+   - entity_id
+   - faction_id
+ - Constraints
+   - Primary Key
+     - entity_faction_id
+   - Foreign Keys
+     - entity.entity_id
+     - faction.faction_id
+
+##rank##
+ - Columns
+   - guild_id
+   - name
+ - Constraints
+   - Primary Key
+     - guild_id
+
+##guild##
+ - Columns
+   - guild_id
+   - name
+ - Constraints
+   - Primary Key
+     - guild_id
+
+##guild_rank##
+ - Columns
+   - guild_rank_id
+   - guild_id
+   - rank_id
+ - Constraints
+   - Primary Key
+     - guild_rank_id
+   - Unique Keys
+     - guild_id, rank_id
+   - Foreign Keys
+     - guild.guild_id
+     - rank.rank_id
+
+##character_guild##
+ - Columns
+   - character_guild_id
+   - character_id
+   - guild_id
+   - guild_leader
+ - Constraints
+   - Primary Key
+     - character_guild_id
+   - Unique Keys
+     - guild_id, guild_leader
+   - Foreign Keys
+     - character.character_id
+     - guild.guild_id
+
+##character_guild_rank##
+ - Columns
+   - character_guild_rank_id
+   - character_id
+   - guild_rank_id
+ - Constraints
+   - Primary Key
+     - character_guild_rank_id
+   - Unique Keys
+     - character_id, guild_rank_id
+   - Foreign Keys
+     - character.character_id
+     - guild_rank.guild_rank_id
+
+##party##
+ - Columns
+   - party_id
+ - Constraints
+   - Primary Key
+     - party_id
+
+##character_party##
+ - Columns
+   - character_party_id
+   - character_id
+   - party_id
+   - party_leader
+ - Constraints
+   - Primary Key
+     - character_party_id
+   - Unique Keys
+     - character_id
+     - party_id, party_leader
+   - Foreign Keys
+     - character.character_id
+     - party.party_id
+
+##title##
+ - Columns
+   - title_id
+   - name
+ - Constraints
+   - Primary Key
+     - title_id
+
+##character_title##
+ - Columns
+   - character_title_id
+   - character_id
+   - title_id
+ - Constraints
+   - Primary Key
+     - character_title_id
+   - Foreign Keys
+     - character.character_id
+     - title.title_id
 
