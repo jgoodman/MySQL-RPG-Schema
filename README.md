@@ -187,7 +187,7 @@ Columns:
 
 ####item_attribute####
 
-This table associates items with attributes. These attributes are intended to be added to character attributes. If an item 
+This table associates items with attributes. These attributes are intended to be added to character attributes.
 
 Columns:
 - item_attribute_id
