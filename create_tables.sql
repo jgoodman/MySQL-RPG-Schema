@@ -307,6 +307,7 @@ CREATE TABLE `item_loot` (
     `item_loot_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `loot_id` int(11) UNSIGNED NOT NULL,
     `item_id` int(11) UNSIGNED NOT NULL,
+    `drop_chance` FLOAT(4,4),
     PRIMARY KEY (`item_loot_id`),
     CONSTRAINT `fk_item_loot_loot_id` FOREIGN KEY (`loot_id`) REFERENCES `loot`(`loot_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk_item_loot_item_id` FOREIGN KEY (`item_id`) REFERENCES `item`(`item_id`) ON DELETE CASCADE ON UPDATE CASCADE
