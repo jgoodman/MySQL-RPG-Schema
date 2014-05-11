@@ -125,6 +125,7 @@ CREATE TABLE `item` (
     `item_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `item_type_id` int(11) UNSIGNED NOT NULL,
     `name` varchar(255) NOT NULL,
+    `required_level` smallint,
     `durability` tinyint  NOT NULL,
     PRIMARY KEY (`item_id`),
     CONSTRAINT `fk_item_item_type_id` FOREIGN KEY (`item_type_id`) REFERENCES `item_type`(`item_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -223,6 +224,7 @@ CREATE TABLE `ability` (
     `ability_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `ability_type_id` int(11) UNSIGNED NOT NULL,
+    `required_level` smallint,
     PRIMARY KEY (`ability_id`),
     CONSTRAINT `fk_ability_ability_type_id` FOREIGN KEY (`ability_type_id`) REFERENCES `ability`(`ability_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -283,4 +285,201 @@ CREATE TABLE `character_debuff` (
     PRIMARY KEY (`character_debuff_id`),
     CONSTRAINT `fk_character_debuff_debuff_id` FOREIGN KEY (`debuff_id`) REFERENCES `debuff`(`debuff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `fk_character_debuff_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `loot` (
+    `loot_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `xp` bigint,
+    `money` bigint,
+    PRIMARY KEY (`loot_id`)
+);
+
+CREATE TABLE `character_loot` (
+    `character_loot_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `loot_id` int(11) UNSIGNED NOT NULL,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`character_loot_id`),
+    CONSTRAINT `fk_character_loot_loot_id` FOREIGN KEY (`loot_id`) REFERENCES `loot`(`loot_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_loot_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `item_loot` (
+    `item_loot_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `loot_id` int(11) UNSIGNED NOT NULL,
+    `item_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`item_loot_id`),
+    CONSTRAINT `fk_item_loot_loot_id` FOREIGN KEY (`loot_id`) REFERENCES `loot`(`loot_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_item_loot_item_id` FOREIGN KEY (`item_id`) REFERENCES `item`(`item_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_type` (
+    `entity_type_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`entity_type_id`)
+);
+
+CREATE TABLE `entity` (
+    `entity_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `entity_type_id` int(11) UNSIGNED NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `level` smallint,
+    PRIMARY KEY (`entity_id`),
+    CONSTRAINT `fk_entity_entity_type_id` FOREIGN KEY (`entity_type_id`) REFERENCES `entity_type`(`entity_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_attribute` (
+    `entity_attribute_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `entity_id` int(11) UNSIGNED NOT NULL,
+    `attribute_id` int(11) UNSIGNED NOT NULL,
+    `value` bigint NOT NULL,
+    PRIMARY KEY (`entity_attribute_id`),
+    CONSTRAINT `uk_entity_id_attribute_id` UNIQUE (`entity_id`, `attribute_id`),
+    CONSTRAINT `fk_entity_attribute_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_attribute_attribute_id` FOREIGN KEY (`attribute_id`) REFERENCES `attribute`(`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_location` (
+    `entity_location_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `entity_id` int(11) UNSIGNED NOT NULL,
+    `location_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`entity_location_id`),
+    CONSTRAINT `uk_entity_id` UNIQUE (`entity_id`),
+    CONSTRAINT `fk_entity_location_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_location_location_id` FOREIGN KEY (`location_id`) REFERENCES `location`(`location_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_class` (
+    `entity_class_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `entity_id` int(11) UNSIGNED NOT NULL,
+    `class_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`entity_class_id`),
+    CONSTRAINT `uk_entity_id` UNIQUE (`entity_id`),
+    CONSTRAINT `fk_entity_class_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_class_class_id` FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_buff` (
+    `entity_buff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `entity_id` int(11) UNSIGNED NOT NULL,
+    `buff_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`entity_buff_id`),
+    CONSTRAINT `fk_entity_buff_buff_id` FOREIGN KEY (`buff_id`) REFERENCES `buff`(`buff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_buff_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_debuff` (
+    `entity_debuff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `entity_id` int(11) UNSIGNED NOT NULL,
+    `debuff_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`entity_debuff_id`),
+    CONSTRAINT `fk_entity_debuff_debuff_id` FOREIGN KEY (`debuff_id`) REFERENCES `debuff`(`debuff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_debuff_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_loot` (
+    `entity_loot_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `loot_id` int(11) UNSIGNED NOT NULL,
+    `entity_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`entity_loot_id`),
+    CONSTRAINT `fk_entity_loot_loot_id` FOREIGN KEY (`loot_id`) REFERENCES `loot`(`loot_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_loot_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `faction` (
+    `faction_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`faction_id`)
+);
+
+CREATE TABLE `character_faction` (
+    `character_faction_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    `faction_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`character_faction_id`),
+    CONSTRAINT `fk_character_faction_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_faction_faction_id` FOREIGN KEY (`faction_id`) REFERENCES `faction`(`faction_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `entity_faction` (
+    `entity_faction_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `entity_id` int(11) UNSIGNED NOT NULL,
+    `faction_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`entity_faction_id`),
+    CONSTRAINT `fk_entity_faction_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_faction_faction_id` FOREIGN KEY (`faction_id`) REFERENCES `faction`(`faction_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `rank` (
+    `guild_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`guild_id`)
+);
+
+CREATE TABLE `guild` (
+    `guild_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`guild_id`)
+);
+
+CREATE TABLE `guild_rank` (
+    `guild_rank_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `guild_id` int(11) UNSIGNED NOT NULL,
+    `rank_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`guild_rank_id`),
+    CONSTRAINT `uk_guild_id_rank_id` UNIQUE (`guild_id`, `rank_id`),
+    CONSTRAINT `fk_guild_rank_guild_id` FOREIGN KEY (`guild_id`) REFERENCES `guild`(`guild_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_guild_rank_rank_id` FOREIGN KEY (`rank_id`) REFERENCES `rank`(`rank_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `character_guild` (
+    `character_guild_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    `guild_id` int(11) UNSIGNED NOT NULL,
+    `guild_leader` tinyint,
+    PRIMARY KEY (`character_guild_id`),
+    CONSTRAINT `uk_guild_id_guild_leader` UNIQUE (`guild_id`, `guild_leader`),
+    CONSTRAINT `fk_character_guild_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_guild_guild_id` FOREIGN KEY (`guild_id`) REFERENCES `guild`(`guild_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `character_guild_rank` (
+    `character_guild_rank_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    `guild_rank_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`character_guild_rank_id`),
+    CONSTRAINT `uk_character_id_guild_rank_id` UNIQUE (`character_id`, `guild_rank_id`),
+    CONSTRAINT `fk_character_guild_rank_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_guild_rank_guild_rank_id` FOREIGN KEY (`guild_rank_id`) REFERENCES `guild_rank`(`guild_rank_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `party` (
+    `party_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (`party_id`)
+);
+
+CREATE TABLE `character_party` (
+    `character_party_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    `party_id` int(11) UNSIGNED NOT NULL,
+    `party_leader` tinyint,
+    PRIMARY KEY (`character_party_id`),
+    CONSTRAINT `uk_character_id` UNIQUE (`character_id`),
+    CONSTRAINT `uk_party_id_party_leader` UNIQUE (`party_id`, `party_leader`),
+    CONSTRAINT `fk_character_party_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_party_party_id` FOREIGN KEY (`party_id`) REFERENCES `party`(`party_id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `title` (
+    `title_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    PRIMARY KEY (`title_id`)
+);
+
+CREATE TABLE `character_title` (
+    `character_title_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `character_id` int(11) UNSIGNED NOT NULL,
+    `title_id` int(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`character_title_id`),
+    CONSTRAINT `fk_character_title_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_title_title_id` FOREIGN KEY (`title_id`) REFERENCES `title`(`title_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
