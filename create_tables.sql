@@ -239,52 +239,34 @@ CREATE TABLE `class_ability` (
     CONSTRAINT `fk_class_ability_ability_id` FOREIGN KEY (`ability_id`) REFERENCES `ability`(`ability_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `buff_type` (
-    `buff_type_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `effect_type` (
+    `effect_type_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `desc` varchar(255),
-    PRIMARY KEY (`buff_type_id`)
+    PRIMARY KEY (`effect_type_id`)
 );
 
-CREATE TABLE `buff` (
-    `buff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+INSERT INTO `effect_type` (`name`, `desc`) VALUES ('buff', 'A temporary benefit to a character’s attributes');
+INSERT INTO `effect_type` (`name`, `desc`) VALUES ('debuff', 'A temporary hindrance to a character’s attributes');
+
+CREATE TABLE `status_effect` (
+    `status_effect_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
-    `buff_type_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`buff_id`),
-    CONSTRAINT `fk_buff_buff_type_id` FOREIGN KEY (`buff_type_id`) REFERENCES `buff_type`(`buff_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE `character_buff` (
-    `character_buff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `character_id` int(11) UNSIGNED NOT NULL,
-    `buff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`character_buff_id`),
-    CONSTRAINT `fk_character_buff_buff_id` FOREIGN KEY (`buff_id`) REFERENCES `buff`(`buff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_character_buff_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE `debuff_type` (
-    `debuff_type_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) NOT NULL,
+    `effect_type_id` int(11) UNSIGNED NOT NULL,
+    `duration` bigint,
     `desc` varchar(255),
-    PRIMARY KEY (`debuff_type_id`)
+    PRIMARY KEY (`status_effect_id`),
+    CONSTRAINT `fk_status_effect_effect_type_id` FOREIGN KEY (`effect_type_id`) REFERENCES `effect_type`(`effect_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `debuff` (
-    `debuff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) NOT NULL,
-    `debuff_type_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`debuff_id`),
-    CONSTRAINT `fk_debuff_debuff_type_id` FOREIGN KEY (`debuff_type_id`) REFERENCES `debuff_type`(`debuff_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE `character_debuff` (
-    `character_debuff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `character_status_effect` (
+    `character_status_effect_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `character_id` int(11) UNSIGNED NOT NULL,
-    `debuff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`character_debuff_id`),
-    CONSTRAINT `fk_character_debuff_debuff_id` FOREIGN KEY (`debuff_id`) REFERENCES `debuff`(`debuff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_character_debuff_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    `status_effect_id` int(11) UNSIGNED NOT NULL,
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`character_status_effect_id`),
+    CONSTRAINT `fk_character_status_effect_status_effect_id` FOREIGN KEY (`status_effect_id`) REFERENCES `status_effect`(`status_effect_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_character_status_effect_character_id` FOREIGN KEY (`character_id`) REFERENCES `character`(`character_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `loot` (
@@ -359,22 +341,14 @@ CREATE TABLE `entity_class` (
     CONSTRAINT `fk_entity_class_class_id` FOREIGN KEY (`class_id`) REFERENCES `class`(`class_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `entity_buff` (
-    `entity_buff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `entity_status_effect` (
+    `entity_status_effect_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `entity_id` int(11) UNSIGNED NOT NULL,
-    `buff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`entity_buff_id`),
-    CONSTRAINT `fk_entity_buff_buff_id` FOREIGN KEY (`buff_id`) REFERENCES `buff`(`buff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_entity_buff_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE `entity_debuff` (
-    `entity_debuff_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `entity_id` int(11) UNSIGNED NOT NULL,
-    `debuff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`entity_debuff_id`),
-    CONSTRAINT `fk_entity_debuff_debuff_id` FOREIGN KEY (`debuff_id`) REFERENCES `debuff`(`debuff_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk_entity_debuff_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    `status_effect_id` int(11) UNSIGNED NOT NULL,
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`entity_status_effect_id`),
+    CONSTRAINT `fk_entity_status_effect_status_effect_id` FOREIGN KEY (`status_effect_id`) REFERENCES `status_effect`(`status_effect_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_entity_status_effect_entity_id` FOREIGN KEY (`entity_id`) REFERENCES `entity`(`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `entity_loot` (
