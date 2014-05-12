@@ -237,64 +237,37 @@ CREATE TABLE `h_class_ability` (
     PRIMARY KEY (`h_class_ability_id`)
 );
 
-CREATE TABLE `h_buff_type` (
-    h_buff_type_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `h_effect_type` (
+    h_effect_type_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
     h_action ENUM('create', 'update', 'delete'),
     h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `buff_type_id` int(11) UNSIGNED NOT NULL,
+    `effect_type_id` int(11) UNSIGNED NOT NULL,
     `name` varchar(255) NOT NULL,
     `desc` varchar(255),
-    PRIMARY KEY (`h_buff_type_id`)
+    PRIMARY KEY (`h_effect_type_id`)
 );
 
-CREATE TABLE `h_buff` (
-    h_buff_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `h_status_effect` (
+    h_status_effect_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
     h_action ENUM('create', 'update', 'delete'),
     h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `buff_id` int(11) UNSIGNED NOT NULL,
+    `status_effect_id` int(11) UNSIGNED NOT NULL,
     `name` varchar(255) NOT NULL,
-    `buff_type_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`h_buff_id`)
-);
-
-CREATE TABLE `h_character_buff` (
-    h_character_buff_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-    h_action ENUM('create', 'update', 'delete'),
-    h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `character_buff_id` int(11) UNSIGNED NOT NULL,
-    `character_id` int(11) UNSIGNED NOT NULL,
-    `buff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`h_character_buff_id`)
-);
-
-CREATE TABLE `h_debuff_type` (
-    h_debuff_type_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-    h_action ENUM('create', 'update', 'delete'),
-    h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `debuff_type_id` int(11) UNSIGNED NOT NULL,
-    `name` varchar(255) NOT NULL,
+    `effect_type_id` int(11) UNSIGNED NOT NULL,
+    `duration` bigint,
     `desc` varchar(255),
-    PRIMARY KEY (`h_debuff_type_id`)
+    PRIMARY KEY (`h_status_effect_id`)
 );
 
-CREATE TABLE `h_debuff` (
-    h_debuff_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `h_character_status_effect` (
+    h_character_status_effect_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
     h_action ENUM('create', 'update', 'delete'),
     h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `debuff_id` int(11) UNSIGNED NOT NULL,
-    `name` varchar(255) NOT NULL,
-    `debuff_type_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`h_debuff_id`)
-);
-
-CREATE TABLE `h_character_debuff` (
-    h_character_debuff_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-    h_action ENUM('create', 'update', 'delete'),
-    h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `character_debuff_id` int(11) UNSIGNED NOT NULL,
+    `character_status_effect_id` int(11) UNSIGNED NOT NULL,
     `character_id` int(11) UNSIGNED NOT NULL,
-    `debuff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`h_character_debuff_id`)
+    `status_effect_id` int(11) UNSIGNED NOT NULL,
+    `date` TIMESTAMP,
+    PRIMARY KEY (`h_character_status_effect_id`)
 );
 
 CREATE TABLE `h_loot` (
@@ -379,24 +352,15 @@ CREATE TABLE `h_entity_class` (
     PRIMARY KEY (`h_entity_class_id`)
 );
 
-CREATE TABLE `h_entity_buff` (
-    h_entity_buff_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `h_entity_status_effect` (
+    h_entity_status_effect_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
     h_action ENUM('create', 'update', 'delete'),
     h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `entity_buff_id` int(11) UNSIGNED NOT NULL,
+    `entity_status_effect_id` int(11) UNSIGNED NOT NULL,
     `entity_id` int(11) UNSIGNED NOT NULL,
-    `buff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`h_entity_buff_id`)
-);
-
-CREATE TABLE `h_entity_debuff` (
-    h_entity_debuff_id bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-    h_action ENUM('create', 'update', 'delete'),
-    h_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `entity_debuff_id` int(11) UNSIGNED NOT NULL,
-    `entity_id` int(11) UNSIGNED NOT NULL,
-    `debuff_id` int(11) UNSIGNED NOT NULL,
-    PRIMARY KEY (`h_entity_debuff_id`)
+    `status_effect_id` int(11) UNSIGNED NOT NULL,
+    `date` TIMESTAMP,
+    PRIMARY KEY (`h_entity_status_effect_id`)
 );
 
 CREATE TABLE `h_entity_loot` (
