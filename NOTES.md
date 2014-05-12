@@ -314,68 +314,42 @@
      - class.class_id
      - ability.ability_id
 
-##buff_type##
+##effect_type##
  - Columns
-   - buff_type_id
+   - effect_type_id
    - name
    - desc
  - Constraints
    - Primary Key
-     - buff_type_id
+     - effect_type_id
+ - Rows
+   - name:'buff', desc:'A temporary benefit to a character’s attributes',
+   - name:'debuff', desc:'A temporary hindrance to a character’s attributes',
 
-##buff##
+##status_effect##
  - Columns
-   - buff_id
+   - status_effect_id
    - name
-   - buff_type_id
- - Constraints
-   - Primary Key
-     - buff_id
-   - Foreign Keys
-     - buff_type.buff_type_id
-
-##character_buff##
- - Columns
-   - character_buff_id
-   - character_id
-   - buff_id
- - Constraints
-   - Primary Key
-     - character_buff_id
-   - Foreign Keys
-     - buff.buff_id
-     - character.character_id
-
-##debuff_type##
- - Columns
-   - debuff_type_id
-   - name
+   - effect_type_id
+   - duration
    - desc
  - Constraints
    - Primary Key
-     - debuff_type_id
-
-##debuff##
- - Columns
-   - debuff_id
-   - name
-   - debuff_type_id
- - Constraints
-   - Primary Key
-     - debuff_id
+     - status_effect_id
    - Foreign Keys
-     - debuff_type.debuff_type_id
+     - effect_type.effect_type_id
 
-##character_debuff##
+##character_status_effect##
  - Columns
-   - character_debuff_id
+   - character_status_effect_id
    - character_id
-   - debuff_id
+   - status_effect_id
+   - date
  - Constraints
    - Primary Key
-     - character_debuff_id
+     - character_status_effect_id
    - Foreign Keys
-     - debuff.debuff_id
+     - status_effect.status_effect_id
      - character.character_id
 
 ##loot##
@@ -404,6 +378,7 @@
    - item_loot_id
    - loot_id
    - item_id
+   - drop_chance
  - Constraints
    - Primary Key
      - item_loot_id
@@ -474,28 +449,17 @@
      - entity.entity_id
      - class.class_id
 
-##entity_buff##
+##entity_status_effect##
  - Columns
-   - entity_buff_id
+   - entity_status_effect_id
    - entity_id
-   - buff_id
+   - status_effect_id
+   - date
  - Constraints
    - Primary Key
-     - entity_buff_id
+     - entity_status_effect_id
    - Foreign Keys
-     - buff.buff_id
-     - entity.entity_id
-
-##entity_debuff##
- - Columns
-   - entity_debuff_id
-   - entity_id
-   - debuff_id
- - Constraints
-   - Primary Key
-     - entity_debuff_id
-   - Foreign Keys
-     - debuff.debuff_id
+     - status_effect.status_effect_id
      - entity.entity_id
 
 ##entity_loot##
