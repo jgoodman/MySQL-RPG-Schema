@@ -303,68 +303,43 @@ Columns:
 - ability_id
 
 
-####buff_type####
+####effect_type####
 
-Different buff types held here (SEE "buff" TABLE).
+Different effect types held here.
 
 Columns:
-- buff_type_id
+- effect_type_id
 - name
 - desc
 
+Rows:
+- name:'buff', desc:'A temporary benefit to a character’s attributes',
+- name:'debuff', desc:'A temporary hindrance to a character’s attributes',
 
-####buff####
 
-A "buff" is usually some temporary boost given to a character by some mean, perhaps from an ability, an item, or being at some place.
+####status_effect####
 
-See this [wiki article](http://en.wikipedia.org/wiki/Status_effect#Buffs) in regards to what rpg buffs are and examples.
+A "status effect" is usually some temporary advantage or hindrance given to a character by some mean, perhaps from an ability, an item, or being at some place.
+
+See this [wiki article](http://en.wikipedia.org/wiki/Status_effect) in regards to what rpg status effects are and examples.
 
 Columns:
-- buff_id
+- status_effect_id
 - name
-- buff_type_id
-
-
-####character_buff####
-
-This table associates buffs to what characters currently have on them.
-
-Columns:
-- character_buff_id
-- character_id
-- buff_id
-
-
-####debuff_type####
-
-Different debuff types held here (SEE "debuff" TABLE).
-
-Columns:
-- debuff_type_id
-- name
+- effect_type_id
+- duration
 - desc
 
 
-####debuff####
+####character_status_effect####
 
-A "buff" is usually some temporary disadvantage given to a character, perhaps from an ability, an item, or being at some place.
-
-See this [wiki article](http://en.wikipedia.org/wiki/Status_effect#Debuffs) in regards to what rpg debuffs are and examples.
+This table associates current status effects are on character.
 
 Columns:
-- debuff_id
-- name
-- debuff_type_id
-
-
-####character_debuff####
-
-This table associates debuffs to what characters currently have on them.
-
-Columns:
-- character_debuff_id
+- character_status_effect_id
 - character_id
-- debuff_id
+- status_effect_id
+- date
 
 
 ####loot####
@@ -451,24 +426,15 @@ Columns:
 - class_id
 
 
-####entity_buff####
+####entity_status_effect####
 
-Associates current buffs with an entity (SEE "buff" TABLE)
-
-Columns:
-- entity_buff_id
-- entity_id
-- buff_id
-
-
-####entity_debuff####
-
-Associates current debuffs with an entity (SEE "debuff" TABLE)
+Associates a current status effect with an entity (SEE "status_effect" TABLE)
 
 Columns:
-- entity_debuff_id
+- entity_status_effect_id
 - entity_id
-- debuff_id
+- status_effect_id
+- date
 
 
 ####entity_loot####
