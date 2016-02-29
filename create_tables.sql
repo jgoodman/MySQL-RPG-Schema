@@ -385,7 +385,7 @@ CREATE TABLE `entity_faction` (
 );
 
 CREATE TABLE `rank` (
-    `guild_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `rank_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     PRIMARY KEY (`guild_id`)
 );
