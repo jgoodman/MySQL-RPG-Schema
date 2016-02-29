@@ -226,7 +226,7 @@ CREATE TABLE `ability` (
     `ability_type_id` int(11) UNSIGNED NOT NULL,
     `required_level` smallint,
     PRIMARY KEY (`ability_id`),
-    CONSTRAINT `fk_ability_ability_type_id` FOREIGN KEY (`ability_type_id`) REFERENCES `ability`(`ability_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT `fk_ability_ability_type_id` FOREIGN KEY (`ability_type_id`) REFERENCES `ability_type`(`ability_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `class_ability` (
@@ -385,9 +385,9 @@ CREATE TABLE `entity_faction` (
 );
 
 CREATE TABLE `rank` (
-    `guild_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `rank_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
-    PRIMARY KEY (`guild_id`)
+    PRIMARY KEY (`rank_id`)
 );
 
 CREATE TABLE `guild` (
